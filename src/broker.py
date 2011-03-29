@@ -34,7 +34,7 @@ class Broker(object):
     """
 
     def __init__(self, header_name="Accept"):
-        self.register = {}
+        self.registry = {}
         self.header_name = header_name
 
     def add(self, mimetype, function, quality=1):
@@ -48,15 +48,15 @@ class Broker(object):
             >>> b = Broker()
 
             >>> _ = b.add('text/html', 'html_func')
-            >>> b.register['text/html']
+            >>> b.registry['text/html']
             ('html_func', 1)
 
             >>> _ = b.add('application/json', 'json_func', quality=0.5)
-            >>> b.register['application/json']
+            >>> b.registry['application/json']
             ('json_func', 0.5)
         """
 
-        self.register[mimetype] = (function, quality)
+        self.registry[mimetype] = (function, quality)
         return function
 
     def select(self, accept_header):
@@ -79,7 +79,7 @@ class Broker(object):
         match = accept.best_match(self.server_types())
         if match is None:
             raise NotAcceptable
-        return self.register[match][0]
+        return self.registry[match][0]
 
     def server_types(self):
 
@@ -95,7 +95,7 @@ class Broker(object):
         """
 
         types = []
-        for mimetype, func_qual in self.register.items():
+        for mimetype, func_qual in self.registry.items():
             types.append((mimetype, func_qual[1]))
         types.sort(key=lambda pair: pair[::-1], reverse=True)
         return types
