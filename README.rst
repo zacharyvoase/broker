@@ -34,7 +34,7 @@ Underneath the hood, Broker uses `webob.acceptparse`_ to parse Accept headers
 and match against your registered functions. More docs can be found at
 http://dvxhouse.github.com/broker/.
 
-.. webob.acceptparse: http://pythonpaste.org/webob/reference.html#accept-headers
+.. _webob.acceptparse: http://pythonpaste.org/webob/reference.html#accept-headers
 
 
 Installation
