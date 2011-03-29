@@ -33,8 +33,9 @@ class Broker(object):
         (3, 'json_stuff')
     """
 
-    def __init__(self):
+    def __init__(self, header_name="Accept"):
         self.register = {}
+        self.header_name = header_name
 
     def add(self, mimetype, function, quality=1):
         """Register a function against a MIME type on this broker."""
@@ -52,7 +53,7 @@ class Broker(object):
 
         server_types = [(mimetype, func_qual[1])
                 for mimetype, func_qual in self.register.items()]
-        accept = acceptparse.MIMEAccept("Accept", accept_header)
+        accept = acceptparse.MIMEAccept(self.header_name, accept_header)
         match = accept.best_match(server_types)
         if match is None:
             raise NotAcceptable
