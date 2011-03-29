@@ -1,6 +1,6 @@
-======
-Broker
-======
+================
+Broker |release|
+================
 
 Function dispatch in Python based on MIME Accept-* headers.
 
