@@ -30,7 +30,11 @@ Call the backend function directly:
     >>> b("text/html;q=0.1,application/json", 'json_stuff')
     (3, 'json_stuff')
 
-More docs can be found at <http://zacharyvoase.github.com/broker/>.
+Underneath the hood, Broker uses `webob.acceptparse`_ to parse Accept headers
+and match against your registered functions. More docs can be found at
+http://zacharyvoase.github.com/broker/.
+
+.. webob.acceptparse: http://pythonpaste.org/webob/reference.html#accept-headers
 
 
 Installation
