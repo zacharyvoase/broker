@@ -51,13 +51,30 @@ class Broker(object):
         Raise :exc:`NotAcceptable` if no acceptable function is found.
         """
 
-        server_types = [(mimetype, func_qual[1])
-                for mimetype, func_qual in self.register.items()]
         accept = acceptparse.MIMEAccept(self.header_name, accept_header)
-        match = accept.best_match(server_types)
+        match = accept.best_match(self.server_types())
         if match is None:
             raise NotAcceptable
         return self.register[match][0]
+
+    def server_types(self):
+
+        """
+        Return a list of `(mimetype, quality)` pairs, sorted by quality.
+
+            >>> b = Broker()
+            >>> b.add('application/json', None, quality=0.75)
+            >>> b.add('application/xml', None, quality=0.25)
+            >>> b.add('text/html', None, quality=1)
+            >>> b.server_types()
+            [('text/html', 1), ('application/json', 0.75), ('application/xml', 0.25)]
+        """
+
+        types = []
+        for mimetype, func_qual in self.register.items():
+            types.append((mimetype, func_qual[1]))
+        types.sort(key=lambda pair: pair[::-1], reverse=True)
+        return types
 
     def __call__(self, accept_header, *args, **kwargs):
 
