@@ -59,6 +59,30 @@ class Broker(object):
         self.registry[mimetype] = (function, quality)
         return function
 
+    def register(self, mimetype, quality=1):
+        """
+        Build a decorator for registering a function for a MIME type.
+
+            >>> b = Broker()
+
+            >>> @b.register("text/html")
+            ... def html_func(x):
+            ...     return x + 1
+
+            >>> @b.register("application/json", quality=0.25)
+            ... def json_func(x):
+            ...     return x + 5
+
+            >>> b.registry['text/html']
+            (<function html_func at 0x...>, 1)
+            >>> b.registry['application/json']
+            (<function json_func at 0x...>, 0.25)
+        """
+
+        def decorator(function):
+            return self.add(mimetype, function, quality=quality)
+        return decorator
+
     def select(self, accept_header):
 
         """
