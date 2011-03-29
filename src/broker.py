@@ -38,7 +38,23 @@ class Broker(object):
         self.header_name = header_name
 
     def add(self, mimetype, function, quality=1):
-        """Register a function against a MIME type on this broker."""
+
+        """
+        Register a function for a MIME type, optionally with a server quality.
+
+        Return the function directly. If `quality` is not provided, defaults to
+        1.
+
+            >>> b = Broker()
+
+            >>> _ = b.add('text/html', 'html_func')
+            >>> b.register['text/html']
+            ('html_func', 1)
+
+            >>> _ = b.add('application/json', 'json_func', quality=0.5)
+            >>> b.register['application/json']
+            ('json_func', 0.5)
+        """
 
         self.register[mimetype] = (function, quality)
         return function
