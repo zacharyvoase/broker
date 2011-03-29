@@ -46,11 +46,9 @@ class Broker(object):
         1.
 
             >>> b = Broker()
-
             >>> _ = b.add('text/html', 'html_func')
             >>> b.registry['text/html']
             ('html_func', 1)
-
             >>> _ = b.add('application/json', 'json_func', quality=0.5)
             >>> b.registry['application/json']
             ('json_func', 0.5)
@@ -64,15 +62,12 @@ class Broker(object):
         Build a decorator for registering a function for a MIME type.
 
             >>> b = Broker()
-
             >>> @b.register("text/html")
             ... def html_func(x):
             ...     return x + 1
-
             >>> @b.register("application/json", quality=0.25)
             ... def json_func(x):
             ...     return x + 5
-
             >>> b.registry['text/html']
             (<function html_func at 0x...>, 1)
             >>> b.registry['application/json']
