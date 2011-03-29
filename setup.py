@@ -14,7 +14,7 @@ setup(
     version=VERSION,
     description="Function dispatch based on MIME Accept headers.",
     author='Zachary Voase',
-    author_email='z@zacharyvoase.com',
+    author_email='z@dvxhouse.com',
     url='http://github.com/dvxhouse/broker',
     package_dir={'': 'src'},
     py_modules=['broker'],
