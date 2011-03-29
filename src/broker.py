@@ -49,6 +49,14 @@ class Broker(object):
         Get the best function for a given Accept header.
 
         Raise :exc:`NotAcceptable` if no acceptable function is found.
+
+            >>> b = Broker()
+            >>> _ = b.add('text/html', 1)
+            >>> _ = b.add('application/json', 2)
+            >>> b.select('text/html')
+            1
+            >>> b.select('application/json')
+            2
         """
 
         accept = acceptparse.MIMEAccept(self.header_name, accept_header)
