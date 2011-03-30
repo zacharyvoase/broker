@@ -18,5 +18,6 @@ setup(
     url='http://github.com/dvxhouse/broker',
     package_dir={'': 'src'},
     py_modules=['broker'],
+    install_requires=['WebOb>=1.0.0'],
     test_suite='broker._get_tests',
 )
