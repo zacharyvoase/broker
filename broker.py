@@ -1,20 +1,24 @@
 from webob import acceptparse
 
 
+Accept = acceptparse.Accept
+MIMEAccept = acceptparse.MIMEAccept
+
+
 class Broker(object):
 
     """
     Function dispatch based on MIME Accept-* headers.
 
     Initialize a broker with some dispatched-to functions matched against MIME
-    types:
+    types::
 
         >>> b = Broker()
         >>> html_handler = b.add("text/html", lambda x: (1, x))
         >>> xml_handler = b.add("application/xml", lambda x: (2, x))
         >>> json_handler = b.add("application/json", lambda x: (3, x))
 
-    Select a backend function based on an Accept header:
+    Select a backend function based on an Accept header value::
 
         >>> b.select("text/html") is html_handler
         True
@@ -23,7 +27,7 @@ class Broker(object):
         >>> b.select("text/html;q=0.1,application/json") is json_handler
         True
 
-    Call the backend functions directly:
+    Call the backend functions directly::
 
         >>> b("text/html", 'hello')
         (1, 'hello')
@@ -31,11 +35,17 @@ class Broker(object):
         (1, 'world')
         >>> b("text/html;q=0.1,application/json", 'json_stuff')
         (3, 'json_stuff')
+
+    The constructor also accepts an `accept_cls` keyword argument, which
+    defaults to ``webob.acceptparse.MIMEAccept``. If you're matching on
+    elements that are *not* MIME types, change this to
+    ``webob.acceptparse.Accept`` (aliased, for convenience, as
+    ``broker.Accept``).
     """
 
-    def __init__(self, header_name="Accept"):
+    def __init__(self, accept_cls=acceptparse.MIMEAccept):
         self.registry = {}
-        self.header_name = header_name
+        self.accept_cls = accept_cls
 
     def add(self, mimetype, function, quality=1):
 
@@ -94,7 +104,7 @@ class Broker(object):
             2
         """
 
-        accept = acceptparse.MIMEAccept(self.header_name, accept_header)
+        accept = self.accept_cls(accept_header)
         match = accept.best_match(self.server_types())
         if match is None:
             raise NotAcceptable

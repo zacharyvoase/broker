@@ -53,7 +53,8 @@ project = u'Broker'
 #
 
 # The short X.Y version.
-version = open(os.path.join(os.path.dirname(curdir), 'VERSION')).read()
+import pkg_resources
+version = pkg_resources.get_distribution('broker').version
 # The full version, including alpha/beta/rc tags.
 release = version
 
