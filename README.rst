@@ -5,14 +5,14 @@ Broker
 Function dispatch in Python based on MIME Accept-* headers.
 
 Initialize a broker with some dispatched-to functions matched against MIME
-types:
+types::
 
     >>> b = Broker()
     >>> html_handler = b.add("text/html", lambda x: (1, x))
     >>> xml_handler = b.add("application/xml", lambda x: (2, x))
     >>> json_handler = b.add("application/json", lambda x: (3, x))
 
-Select a backend function based on an Accept header:
+Select a backend function based on an Accept header::
 
     >>> b.select("text/html") is html_handler
     True
@@ -21,7 +21,7 @@ Select a backend function based on an Accept header:
     >>> b.select("text/html;q=0.1,application/json") is json_handler
     True
 
-Call the backend function directly:
+Call the backend function directly::
 
     >>> b("text/html", 'hello')
     (1, 'hello')
@@ -32,7 +32,7 @@ Call the backend function directly:
 
 Underneath the hood, Broker uses `webob.acceptparse`_ to parse Accept headers
 and match against your registered functions. More docs can be found at
-http://dvxhouse.github.com/broker/.
+http://broker.readthedocs.org/.
 
 .. _webob.acceptparse: http://pythonpaste.org/webob/reference.html#accept-headers
 

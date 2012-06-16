@@ -5,18 +5,15 @@ from distribute_setup import use_setuptools
 use_setuptools()
 
 from setuptools import setup
-import os.path as p
 
-VERSION = open(p.join(p.dirname(p.abspath(__file__)), 'VERSION')).read().strip()
 
 setup(
     name='broker',
-    version=VERSION,
+    version='0.0.3',
     description="Function dispatch based on MIME Accept headers.",
     author='Zachary Voase',
-    author_email='z@dvxhouse.com',
-    url='http://github.com/dvxhouse/broker',
-    package_dir={'': 'src'},
+    author_email='z@zacharyvoase.com',
+    url='http://github.com/zacharyvoase/broker',
     py_modules=['broker'],
     install_requires=['WebOb>=1.0.0'],
     test_suite='broker._get_tests',
