@@ -7,5 +7,6 @@ dist
 MANIFEST
 test/example/*.sqlite3
 doc/.build
+doc/_build
 distribute-*.egg
 distribute-*.tar.gz
